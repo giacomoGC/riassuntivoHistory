@@ -26,15 +26,27 @@ import HistoryQueueBox from './HistoryQueueBox.vue'
               }
             }
           }
+      },
+      q2: function (newQ, oldQ) {    
+          if(this.history.length < 50) {
+            this.pushToHistory(oldQ); 
+            this.history = [...new Set(this.history)]
+            for( let i = 0; i < this.history.length; i++ ) {
+              if( this.history[i] === this.q2) {
+                this.history.splice(i, 1)
+              }
+            }
+          }
       }
     },
     methods: {
       increment(queue) {
-        this.queue++
+        console.log(queue);
+        this[queue]++
       },
       decrement(queue) {
-        if(this.queue >= 1) {
-          this.queue--
+        if(this[queue] >= 1) {
+          this[queue]--
         }
       },
       pushToHistory(q) {
@@ -50,13 +62,13 @@ import HistoryQueueBox from './HistoryQueueBox.vue'
   <div style="display: flex">
     <div>
       <QueueBox :q="q1" :prefix="prefix" :key="1"></QueueBox>
-      <button class="btn" @click="decrement(q1)">Prev</button>
-      <button class="btn" @click="increment(q1)">Next</button>
+      <button class="btn" @click="decrement('q1')">Prev</button>
+      <button class="btn" @click="increment('q1')">Next</button>
     </div>
     <div>
       <QueueBox :q="q2" :prefix="prefix2" :key="2"></QueueBox>
-      <button class="btn" @click="decrement(q2)">Prev</button>
-      <button class="btn" @click="increment(q2)">Next</button>
+      <button class="btn" @click="decrement('q2')">Prev</button>
+      <button class="btn" @click="increment('q2')">Next</button>
     </div>
   </div>
 
