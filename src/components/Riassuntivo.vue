@@ -23,8 +23,7 @@ import HistoryQueueBox from './HistoryQueueBox.vue'
         for (let i in queues) {
           let key = queues[i];
 
-          this.$watch(key, function (newQ, oldQ) {    
-            if(this.history.length < 50) {
+          this.$watch(key, function (newQ, oldQ) {  
               this.pushToHistory([this.prefixes[i], oldQ]);
               
               // Check for duplicate objects inside history array
@@ -32,13 +31,23 @@ import HistoryQueueBox from './HistoryQueueBox.vue'
               this.history = Array.from(new Set(this.history.map(JSON.stringify)), JSON.parse)
 
               // Check for duplicates between main queues and history ones
+              // Each element of the history (history[i]) is compared to the newly called queue
+              // and duplicates are removed from history
               for( let subIndex = 0; subIndex < this.history.length; subIndex++ ) {
-                console.log(JSON.stringify(this.history[subIndex]));
-                console.log(JSON.stringify([this.prefixes[i], newQ]));
                 if( JSON.stringify(this.history[subIndex]) === JSON.stringify([this.prefixes[i], newQ]) ) {
                   this.history.splice(subIndex, 1)
                 }
               }
+
+            // TODO: different action if history length is getting too long..  
+            if(this.history.length > 50) {
+              let elementsToDelete = 25;
+              while (elementsToDelete--)
+              // Pop the last element from the
+              // end of the array
+              this.history.pop();
+            
+              console.log("Modified Array:", this.history.length);
             }
           })
         }
@@ -53,7 +62,6 @@ import HistoryQueueBox from './HistoryQueueBox.vue'
       },
       pushToHistory(q) {
         this.history.unshift(q);
-        console.log(this.history);
       }
     },
     created() {
