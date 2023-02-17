@@ -18,6 +18,11 @@ import HistoryQueueBox from './HistoryQueueBox.vue'
           if(this.history.length < 50) {
             this.pushToHistory(oldQ); 
             this.history = [...new Set(this.history)]
+            for( let i = 0; i < this.history.length; i++ ) {
+              if( this.history[i] === this.q) {
+                this.history.splice(i, 1)
+              }
+            }
           }
       }
     },
@@ -44,6 +49,5 @@ import HistoryQueueBox from './HistoryQueueBox.vue'
   <button class="btn" @click="decrement">Prev</button>
   <button class="btn" @click="increment">Next</button>
 
-
-  <HistoryQueueBox v-for="item in this.history" :key="Math.random()" :q="item"></HistoryQueueBox>
+  <HistoryQueueBox v-for="i in 5" :key="Math.random()" :q="this.history[i-1]"></HistoryQueueBox>
 </template>
