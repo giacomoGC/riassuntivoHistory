@@ -58,20 +58,20 @@ import HistoryQueueBox from './HistoryQueueBox.vue'
 </script>
 
 <template>
+  <div>
+    <div style="display: flex">
+      <div>
+        <QueueBox :q="q1" :prefix="prefix" :key="1"></QueueBox>
+        <button class="btn" @click="decrement('q1')">Prev</button>
+        <button class="btn" @click="increment('q1')">Next</button>
+      </div>
+      <!-- <div>
+        <QueueBox :q="q2" :prefix="prefix2" :key="2"></QueueBox>
+        <button class="btn" @click="decrement('q2')">Prev</button>
+        <button class="btn" @click="increment('q2')">Next</button>
+      </div> -->
+    </div>
 
-  <div style="display: flex">
-    <div>
-      <QueueBox :q="q1" :prefix="prefix" :key="1"></QueueBox>
-      <button class="btn" @click="decrement('q1')">Prev</button>
-      <button class="btn" @click="increment('q1')">Next</button>
-    </div>
-    <div>
-      <QueueBox :q="q2" :prefix="prefix2" :key="2"></QueueBox>
-      <button class="btn" @click="decrement('q2')">Prev</button>
-      <button class="btn" @click="increment('q2')">Next</button>
-    </div>
+    <HistoryQueueBox v-for="i in 5" :key="Math.random()" :q="this.history[i-1]"></HistoryQueueBox>
   </div>
-
-
-  <HistoryQueueBox v-for="i in 5" :key="Math.random()" :q="this.history[i-1]"></HistoryQueueBox>
 </template>
